@@ -83,9 +83,9 @@ Once generated, issue the following command and verify the certificate contains 
         X509v3 Extended Key Usage:
             Code Signing
         Netscape CA Revocation Url:
-            https://openziti.github.io/crl/revoked.pem
+            https://openziti.github.io/crl/openziti.crl
         Netscape Revocation Url:
-            https://openziti.github.io/crl/revoked.pem
+            https://openziti.github.io/crl/openziti.crl
 
 ## Signing Code Using Signtool
 
@@ -116,16 +116,22 @@ To revoke a certificate perform the following steps:
             -cert certs/openziti.rootCA.rsa.pem \
             -revoke certs/openziti.signing.2021.rsa.pem.torevoke \
             -crl_reason keyCompromise
-   
-1. sign the crl using the private key and generate the actual CRL 
 
-       openssl ca -config ./openziti.openssl.conf -gencrl -out openziti.crl
+1. sign the crl using the private key and generate the actual CRL
+
+       openssl ca -config ./openziti.openssl.conf -gencrl -out openziti.crl.pem
+
+1. some platforms might DER encoding - export the crl as DER
+
+       openssl crl -in openziti.crl.pem -inform PEM -outform DER -out openziti.crl
 
 1. commit and push the changes and issue PR to merge to main. Make sure to commit the following files:
     
         serial.num.txt
         certdb.txt
-        openziti.crl
+        openziti.crl (DER formatted binary crl)
+        openziti.crl.pem (PEM formatted textual crl)
+        
 
 ### Revocation Sanity Check
 
