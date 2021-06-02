@@ -1,0 +1,9 @@
+certdb.txt.attr
+*.key
+*.csr
+*.old
+*.p12
+*.pfx
+*.pem
+*.srl
+*.cer
