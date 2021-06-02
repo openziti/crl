@@ -4,6 +4,6 @@ certdb.txt.attr
 *.old
 *.p12
 *.pfx
-*.pem
+/*.pem
 *.srl
 *.cer

@@ -26,7 +26,7 @@ The root certificate authority was generated and is valid for 7320 days (approx 
         -sha512 \
         -days 7320 \
         -subj "/CN=Root Signing CA/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
-        -out openziti.rootCA.rsa.pem
+        -out certs/openziti.rootCA.rsa.pem
 
 ### Code Signing Certificate for openziti
 
@@ -50,7 +50,7 @@ This is a two-part process of generating the CSR and then signing the CSR
         -cert openziti.rootCA.rsa.pem \
         -in openziti.signing.rsa.csr \
         -extfile openziti.signing.rsa.conf \
-        -out openziti.signing.rsa.pem;
+        -out certs/openziti.signing.rsa.pem;
 
 ### Creating a PKCS #12 File
 
