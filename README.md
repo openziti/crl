@@ -92,7 +92,7 @@ Once generated, issue the following command and verify the certificate contains 
 If you need to sign an executable in Windows you would use signtool. Here's an example command illustrating how to 
 sign an executable with a signing certificate. %PFXPASS_OPENZITI% is an environment variable set in `cmd`:
 
-    signtool sign /f openziti.signing.rsa.pfx /p %PFXPASS_OPENZITI% /fd sha512 /td sha512 executable_name.exe
+    signtool sign /f openziti.signing.2021.rsa.pfx /p %PFXPASS_OPENZITI% /fd sha512 /td sha512 executable_name.exe
 
 ## Revoking a Certificate
 
