@@ -38,10 +38,10 @@ The root certificate authority was generated and is valid for 7320 days (approx 
 This is a two-part process of generating the CSR and then signing the CSR. Replace the year appropriately
 
     openssl req \
-        -new -key openziti.signing.rsa.key.torevoke \
+        -new -key openziti.signing.rsa.key \
         -config ./openziti.openssl.conf \
         -subj "/CN=Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
-        -out openziti.signing.rsa.csr.torevoke
+        -out openziti.signing.rsa.csr
     
     openssl ca \
         -batch \
@@ -49,9 +49,9 @@ This is a two-part process of generating the CSR and then signing the CSR. Repla
         -keyfile openziti.rootCA.rsa.key \
         -cert certs/openziti.rootCA.rsa.pem \
         -days 1098 \
-        -in openziti.signing.rsa.csr.torevoke \
+        -in openziti.signing.rsa.csr \
         -extfile openziti.signing.rsa.conf \
-        -out certs/openziti.signing.2021.rsa.pem.torevoke;
+        -out certs/openziti.signing.2021.rsa.pem
 
 ### Creating a PKCS #12 File
 
@@ -61,7 +61,7 @@ file. During the process a password prompt is generated and a strong password wa
     openssl pkcs12 \
         -export \
         -inkey openziti.signing.rsa.key \
-        -in certs/openziti.signing.rsa.pem \
+        -in certs/openziti.signing.2021.rsa.pem \
         -out openziti.signing.rsa.pfx 
 
 ### Verify The Signing Certificate
