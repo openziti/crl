@@ -62,7 +62,7 @@ file. During the process a password prompt is generated and a strong password wa
         -export \
         -inkey openziti.signing.rsa.key \
         -in certs/openziti.signing.2021.rsa.pem \
-        -out openziti.signing.rsa.pfx 
+        -out openziti.signing.2021.rsa.pfx 
 
 ### Verify The Signing Certificate
 
