@@ -114,7 +114,7 @@ To revoke a certificate perform the following steps:
             -config ./openziti.openssl.conf \
             -keyfile openziti.rootCA.rsa.key \
             -cert certs/openziti.rootCA.rsa.pem \
-            -revoke certs/openziti.signing.2021.rsa.pem.torevoke \
+            -revoke certs/openziti.signing.2021.rsa.pem \
             -crl_reason keyCompromise
 
 1. sign the crl using the private key and generate the actual CRL
