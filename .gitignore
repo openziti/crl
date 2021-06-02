@@ -7,3 +7,4 @@ certdb.txt.attr
 /*.pem
 *.srl
 *.cer
+/certs/1*pem

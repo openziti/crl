@@ -35,26 +35,28 @@ The root certificate authority was generated and is valid for 7320 days (approx 
 
 #### Certificate Signed by openziti.rootCA.rsa.pem
 
-This is a two-part process of generating the CSR and then signing the CSR
+This is a two-part process of generating the CSR and then signing the CSR. Replace the year appropriately
 
     openssl req \
-        -new -key openziti.signing.rsa.key \
+        -new -key openziti.signing.rsa.key.torevoke \
         -config ./openziti.openssl.conf \
         -subj "/CN=Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
-        -out openziti.signing.rsa.csr
+        -out openziti.signing.rsa.csr.torevoke
     
     openssl ca \
         -batch \
         -config ./openziti.openssl.conf \
         -keyfile openziti.rootCA.rsa.key \
-        -cert openziti.rootCA.rsa.pem \
-        -in openziti.signing.rsa.csr \
+        -cert certs/openziti.rootCA.rsa.pem \
+        -days 1098 \
+        -in openziti.signing.rsa.csr.torevoke \
         -extfile openziti.signing.rsa.conf \
-        -out certs/openziti.signing.rsa.pem;
+        -out certs/openziti.signing.2021.rsa.pem.torevoke;
 
 ### Creating a PKCS #12 File
 
-The code signing tool of choice desires a PKCS#12 file to be supplied. A strong password was supplied
+The code signing tool of choice desires a PKCS#12 file to be supplied. The following command is run to produce a PKCS#12
+file. During the process a password prompt is generated and a strong password was supplied.
 
     openssl pkcs12 \
         -export \
@@ -133,3 +135,33 @@ the certificate was revoked. Example below:
 
     -V      220603050220Z           1004    unknown /CN=Code Signing Certificate .....
     +R      220603050220Z   210602113249Z,keyCompromise     1004    unknown /CN=Code Signing Certificate
+
+
+## Testing A Revocation
+
+The following commands were issued to generate a certificate which was then revoked:
+
+    openssl genrsa -out openziti.signing.rsa.key.torevoke 4096
+
+    openssl req \
+        -new -key openziti.signing.rsa.key.torevoke \
+        -config ./openziti.openssl.conf \
+        -subj "/CN=RevokeTest Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
+        -out openziti.signing.rsa.csr.torevoke
+    
+    openssl ca \
+        -batch \
+        -config ./openziti.openssl.conf \
+        -keyfile openziti.rootCA.rsa.key \
+        -cert certs/openziti.rootCA.rsa.pem \
+        -days 1098 \
+        -in openziti.signing.rsa.csr.torevoke \
+        -extfile openziti.signing.rsa.conf \
+        -out certs/openziti.signing.2021.rsa.pem.torevoke;
+
+    openssl ca \
+        -config ./openziti.openssl.conf \
+        -keyfile openziti.rootCA.rsa.key \
+        -cert openziti.rootCA.rsa.pem \
+        -revoke openziti.signing.rsa.pem.torevoke \
+        -crl_reason keyCompromise
