@@ -1,0 +1,1 @@
+V	220603044143Z		1000	unknown	/C=US/ST=NC/O=NetFoundry Inc/OU=adv-dev/CN=openziti.org 2021 Code Signing Certificate
