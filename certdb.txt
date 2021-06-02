@@ -1,2 +1,0 @@
-V	240604115708Z		1000	unknown	/C=US/ST=NC/O=openziti.org Inc/OU=adv-dev/CN=Code Signing Certificate 2021
-V	240604145528Z		1001	unknown	/C=US/ST=NC/O=openziti.org Inc/OU=adv-dev/CN=RevokeTest Code Signing Certificate 2021

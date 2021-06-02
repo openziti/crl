@@ -61,7 +61,7 @@ file. During the process a password prompt is generated and a strong password wa
     openssl pkcs12 \
         -export \
         -inkey openziti.signing.rsa.key \
-        -in openziti.signing.rsa.pem \
+        -in certs/openziti.signing.rsa.pem \
         -out openziti.signing.rsa.pfx 
 
 ### Verify The Signing Certificate
@@ -69,7 +69,7 @@ file. During the process a password prompt is generated and a strong password wa
 Once generated, issue the following command and verify the certificate contains the expected extensions:
 
     #command to execute:
-    openssl x509 -text -in openziti.signing.rsa.pem
+    openssl x509 -text -in certs/openziti.signing.2021.rsa.pem
 
     #expected extensions below:
     X509v3 extensions:
@@ -113,11 +113,11 @@ To revoke a certificate perform the following steps:
         openssl ca \
             -config ./openziti.openssl.conf \
             -keyfile openziti.rootCA.rsa.key \
-            -cert openziti.rootCA.rsa.pem \
-            -revoke openziti.signing.rsa.pem \
+            -cert certs/openziti.rootCA.rsa.pem \
+            -revoke certs/openziti.signing.2021.rsa.pem.torevoke \
             -crl_reason keyCompromise
    
-1. sign the crl using the private key 
+1. sign the crl using the private key and generate the actual CRL 
 
        openssl ca -config ./openziti.openssl.conf -gencrl -out openziti.crl
 
@@ -157,11 +157,17 @@ The following commands were issued to generate a certificate which was then revo
         -days 1098 \
         -in openziti.signing.rsa.csr.torevoke \
         -extfile openziti.signing.rsa.conf \
-        -out certs/openziti.signing.2021.rsa.pem.torevoke;
+        -out certs/openziti.signing.2021.rsa.pem.torevoke
 
     openssl ca \
         -config ./openziti.openssl.conf \
         -keyfile openziti.rootCA.rsa.key \
-        -cert openziti.rootCA.rsa.pem \
-        -revoke openziti.signing.rsa.pem.torevoke \
+        -cert certs/openziti.rootCA.rsa.pem \
+        -revoke certs/openziti.signing.2021.rsa.pem.torevoke \
         -crl_reason keyCompromise
+
+    openssl pkcs12 \
+        -export \
+        -inkey openziti.signing.rsa.key.torevoke \
+        -in certs/openziti.signing.2021.rsa.pem.torevoke \
+        -out openziti.signing.rsa.pfx.torevoke
