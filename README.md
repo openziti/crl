@@ -40,7 +40,7 @@ This is a two-part process of generating the CSR and then signing the CSR. Repla
     openssl req \
         -new -key openziti.signing.rsa.key \
         -config ./openziti.openssl.conf \
-        -subj "/CN=Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
+        -subj "/CN=openziti.org Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
         -out openziti.signing.rsa.csr
     
     openssl ca \
@@ -145,7 +145,6 @@ the certificate was revoked. Example below:
     -V      220603050220Z           1004    unknown /CN=Code Signing Certificate .....
     +R      220603050220Z   210602113249Z,keyCompromise     1004    unknown /CN=Code Signing Certificate
 
-
 ## Testing A Revocation
 
 The following commands were issued to generate a certificate which was then revoked:
@@ -155,7 +154,7 @@ The following commands were issued to generate a certificate which was then revo
     openssl req \
         -new -key openziti.signing.rsa.key.torevoke \
         -config ./openziti.openssl.conf \
-        -subj "/CN=RevokeTest Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
+        -subj "/CN=RevokeTest openziti.org Code Signing Certificate 2021/O=openziti.org Inc/OU=adv-dev/C=US/ST=NC" \
         -out openziti.signing.rsa.csr.torevoke
     
     openssl ca \
