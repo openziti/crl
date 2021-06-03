@@ -56,13 +56,16 @@ This is a two-part process of generating the CSR and then signing the CSR. Repla
 ### Creating a PKCS #12 File
 
 The code signing tool of choice desires a PKCS#12 file to be supplied. The following command is run to produce a PKCS#12
-file. During the process a password prompt is generated and a strong password was supplied.
+file. During the process a password file named `.pfxpass` should be created containing the strong password to use
+for the PKCS#12 file. This file is ignored via .gitignore and **MUST NOT** be committed. If committed even accidentally
+the signing cert needs to be revoked.
 
     openssl pkcs12 \
         -export \
         -inkey openziti.signing.rsa.key \
         -in certs/openziti.signing.2021.rsa.pem \
-        -out openziti.signing.2021.rsa.pfx 
+        -out openziti.signing.2021.rsa.pfx \
+        -password "pass:$(cat .pfxpass)"
 
 ### Verify The Signing Certificate
 
