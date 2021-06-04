@@ -77,7 +77,7 @@ Once generated, issue the following command and verify the certificate contains 
     #expected extensions below:
     X509v3 extensions:
         X509v3 Authority Key Identifier:
-            keyid:4E:9A:FF:21:B7:03:42:BF:15:6B:ED:43:82:16:71:3C:FF:40:93:E4
+            keyid:B4:BF:93:98:07:2D:7A:50:4C:3B:93:B9:CC:2E:0E:D8:DC:5B:3B:B8
 
         X509v3 Basic Constraints:
             CA:FALSE
@@ -85,10 +85,11 @@ Once generated, issue the following command and verify the certificate contains 
             Digital Signature
         X509v3 Extended Key Usage:
             Code Signing
-        Netscape CA Revocation Url:
-            https://openziti.github.io/crl/openziti.crl
-        Netscape Revocation Url:
-            https://openziti.github.io/crl/openziti.crl
+        X509v3 CRL Distribution Points:
+
+            Full Name:
+              URI:https://openziti.github.io/crl/openziti.crl
+
 
 ## Signing Code Using Signtool
 
